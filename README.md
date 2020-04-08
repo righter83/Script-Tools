@@ -14,3 +14,14 @@ or for specific record
 ```
 ./check_dns_entry.sh dom.ch NS
 ```
+
+### check_whois_records.sh
+Bash Script to Check a list of domains, what NS are in the whois records.
+
+#### Usage
+Just configure your domainlist at the top
+```
+./check_whois_records.sh
+```
+
+
