@@ -7,7 +7,7 @@ do
 
 	# If the zone is a subdomain or a rDNS zone skip it
 	sub=`echo $dom | grep -oP "\." | wc -l`
-	if [ $sub -gt 1 ] && [[ "$dom" != *.co.uk ]]
+    if [ $sub -gt 1 ] && [[ "$dom" != *.co.uk ]] && [[ "$dom" != *.co.jp ]]
 	then
 		continue
 	fi
@@ -28,7 +28,7 @@ do
 		sleep 1
 		w=`whois $dom  | grep -A5 "Name servers:" | grep -v "Name servers:" | cut  -f1`
 
-	elif [[ "$dom" == *.jp ]]
+	elif [[ "$dom" == *.jp ]] && [[ "$dom" != *.co.jp ]]
 	then
 		w=`whois $dom  | grep "\[Name Server\]" | tr -s " " | cut -d " " -f3`
 
@@ -47,6 +47,10 @@ do
     elif [[ "$dom" == *.co.uk ]]
     then
         w=`whois $dom | grep -A5 "\Name servers" | grep -e "\t" | grep -v WHOIS | tr -s " " | cut -d " " -f2`
+
+	elif [[ "$dom" == *.co.jp ]]
+	then
+		w=`whois $dom  | grep "p. \[Name Server\]" | tr -s " " | cut -d " " -f4`
 
 	# if the TLD is not configured above, drop an error
 	else
